@@ -11,6 +11,7 @@ class Puzzle:
     def __init__(self, state, **kwargs):
         self.state = state #state array
         self.puzzle_size = 3 #size of one dimension of square puzzle (3 = 3*3 puzzle)
+        self.cost = 0
         
         self.parent = None #append parent for finding solution path
         if 'parent' in kwargs:
@@ -69,6 +70,7 @@ class Puzzle:
             print(tile,end='')
         print()
 
+'''
 #test code
 p = Puzzle(['1', '2', '3', '4', '6', '5', 'b', '7', '8'])
 p.print_puzzle()
@@ -77,3 +79,4 @@ for i in range(0, 4):
     q = p.move_blank_space(i)
     if q:
         q.print_puzzle()
+'''
