@@ -8,9 +8,12 @@
 # 678
 
 class Puzzle:
-    def __init__(self, state):
+    def __init__(self, state, size):
         self.state = state #state array
-        self.puzzle_size = 3 #size of one dimension of square puzzle (3 = 3*3 puzzle)
+        self.puzzle_size = size #size of one dimension of square puzzle (3 = 3*3 puzzle)
+
+    def update_state(self, state):
+        self.state = state
     
     '''
     moves the blank space 'b' and slides in the correct tile to replace it
@@ -59,6 +62,7 @@ class Puzzle:
     prints the puzzle to console
     '''
     def print_puzzle(self):
+        print('=====')
         for i,tile in enumerate(self.state):
             if i != 0 and (i % self.puzzle_size) == 0:
                 print()
@@ -66,10 +70,10 @@ class Puzzle:
         print()
 
 #test code
-p = Puzzle(['1', '2', '3', '4', 'b', '5', '6', '7', '8'])
-p.print_puzzle()
-for i in range(0, 4):
-    print('=====')
-    q = p.move_blank_space(i)
-    if q:
-        q.print_puzzle()
+# p = Puzzle(['1', '2', '3', '4', 'b', '5', '6', '7', '8'])
+# p.print_puzzle()
+# for i in range(0, 4):
+#     print('=====')
+#     q = p.move_blank_space(i)
+#     if q:
+#         q.print_puzzle()
