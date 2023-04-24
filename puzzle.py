@@ -31,24 +31,23 @@ class Puzzle:
                 return None
             else:
                 new_index = blank_location - self.puzzle_size
-                
         elif (direction == 1): #right
             if ((blank_location + 1) % self.puzzle_size) == 0:
                 return None
             else:
                 new_index = blank_location + 1
-        
         elif (direction == 2): #down
             if (blank_location + self.puzzle_size) > (self.puzzle_size ** 2):
                 return None
             else:
                 new_index = blank_location + self.puzzle_size
-        
         elif (direction == 3): #left
             if ((blank_location) % self.puzzle_size) == 0:
                 return None
             else:
                 new_index = blank_location - 1
+        else:
+            raise ValueError("Move direction cannot be greater than 3")
                 
         temp = self.state[new_index]
         new_state[blank_location] = temp
