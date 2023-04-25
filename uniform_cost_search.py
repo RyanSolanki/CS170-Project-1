@@ -16,11 +16,11 @@ def uniform_cost_search(start, goal):
         frontier.sort(key = lambda x: x.cost, reverse=True) #order frontier by cost
         current_node = frontier.pop()
         
-        if (iter % 1000 == 0):
-            print("Frontier size={}".format(len(frontier)))
-            print("Visited size={}".format(len(visited)))
+        #if (iter % 1000 == 0):
+        print("Frontier size={}, Visited nodes={}".format(len(frontier), len(visited)), end='\r')
         
         if current_node.state == goal.state:
+            print()
             print("Total nodes expanded={}".format(len(visited)))
             print("Final size of frontier={}".format(len(frontier)))
             return current_node
@@ -52,11 +52,11 @@ def uniform_cost_search(start, goal):
 start = Puzzle(['b', '1', '2',
                 '4', '5', '3',
                 '7', '8', '6'])
-'''
+
 start = Puzzle(['8', '7', '1',
                 '6', 'b', '2',
                 '5', '4', '3'])
-#'''
+
 goal = Puzzle(['1', '2', '3',
                '4', '5', '6',
                '7', '8', 'b'])
@@ -73,6 +73,7 @@ if solution:
         solution = solution.parent
         solution_len += 1
         
+    print('===')
     while solution_trace:
         solution_trace.pop().print_puzzle()
         print('===')
@@ -80,3 +81,4 @@ if solution:
     print('Solution sequence length={}'.format(solution_len))
 else:
     print('No solution')
+'''
