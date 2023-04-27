@@ -12,6 +12,8 @@ class Puzzle:
         self.state = state #state array
         self.puzzle_size = 3 #size of one dimension of square puzzle (3 = 3*3 puzzle)
         self.cost = 0
+        self.g = 0
+        self.h = 0
         
         self.parent = None #append parent for finding solution path
         if 'parent' in kwargs:
@@ -65,11 +67,14 @@ class Puzzle:
     '''
     def print_puzzle(self):
         print('=====')
+
+        print(f"The best state to expand with g(n) = {self.cost}")
+
         for i,tile in enumerate(self.state):
             if i != 0 and (i % self.puzzle_size) == 0:
                 print()
             print(tile,end='')
-        print()
+        print()   
 
 '''
 #test code

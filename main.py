@@ -1,5 +1,6 @@
 from puzzle import Puzzle
 from uniform_cost_search import *
+from misplaced_tile import *
 
 def main():
     goal = Puzzle(['1', '2', '3',
@@ -41,8 +42,8 @@ def main():
     if (algo == 1):
         solution = uniform_cost_search(start, goal)
     elif (algo == 2):
-        pass #replace with call to A* here
-    elif (algo == 2):
+        solution = Astar(start, goal, "misplaced tile")
+    elif (algo == 3):
         pass #replace with call to A* here
         
     if solution:
