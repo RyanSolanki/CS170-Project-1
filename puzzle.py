@@ -1,16 +1,14 @@
-#puzzle.py
-#
-#puzzle state = array denoting order of tiles with b being the blank space
-#ex: 
-# ['1', '2', '3', '4', 'b' , '5', '6', '7', '8'] =
-# 123
-# 4b5
-# 678
-
 class Puzzle:
-    def __init__(self, state):
+    def __init__(self, state, **kwargs):
         self.state = state #state array
         self.puzzle_size = 3 #size of one dimension of square puzzle (3 = 3*3 puzzle)
+        self.cost = 0
+        self.g = 0
+        self.h = 0
+        
+        self.parent = None #append parent for finding solution path
+        if 'parent' in kwargs:
+            self.parent = kwargs.get('parent')
     
     '''
     moves the blank space 'b' and slides in the correct tile to replace it
@@ -37,7 +35,7 @@ class Puzzle:
             else:
                 new_index = blank_location + 1
         elif (direction == 2): #down
-            if (blank_location + self.puzzle_size) > (self.puzzle_size ** 2):
+            if (blank_location + self.puzzle_size) >= (self.puzzle_size ** 2):
                 return None
             else:
                 new_index = blank_location + self.puzzle_size
@@ -47,7 +45,7 @@ class Puzzle:
             else:
                 new_index = blank_location - 1
         else:
-            raise ValueError("Move direction cannot be greater than 3")
+            raise ValueError("Move direction cannot be greater than 3 or less than 0")
                 
         temp = self.state[new_index]
         new_state[blank_location] = temp
@@ -58,18 +56,31 @@ class Puzzle:
     '''
     prints the puzzle to console
     '''
-    def print_puzzle(self):
+    def print_start_state(self):
+        print(f"Expanding state")
+
         for i,tile in enumerate(self.state):
             if i != 0 and (i % self.puzzle_size) == 0:
                 print()
             print(tile,end='')
-        print()
+        print()  
 
-#test code
-p = Puzzle(['1', '2', '3', '4', 'b', '5', '6', '7', '8'])
-p.print_puzzle()
-for i in range(0, 4):
-    print('=====')
-    q = p.move_blank_space(i)
-    if q:
-        q.print_puzzle()
+    def print_astar(self):
+
+        print(f"The best state to expand with g(n) = {self.g}, h(n) = {self.h} is...")
+
+        for i,tile in enumerate(self.state):
+            if i != 0 and (i % self.puzzle_size) == 0:
+                print()
+            print(tile,end='')
+        print("\tExpanding this node...")  
+
+    def print_ucs(self):
+
+        print(f"The best state to expand with g(n) = {self.g} is...")
+
+        for i,tile in enumerate(self.state):
+            if i != 0 and (i % self.puzzle_size) == 0:
+                print()
+            print(tile,end='')
+        print("\tExpanding this node...")   

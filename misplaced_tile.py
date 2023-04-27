@@ -1,7 +1,14 @@
 #uniform cost search
 from puzzle import Puzzle
 
-def uniform_cost_search(start, goal):
+def Misplaced_Tile_Heuristic(currentPuzzle, goalPuzzle):
+    sum = 0
+    for i in range(0, len(currentPuzzle.state)):
+        if currentPuzzle.state[i] != goalPuzzle.state[i] and currentPuzzle.state[i] != 'b':
+            sum = sum + 1
+    return sum
+
+def Astar(start, goal, heuistic):
     frontier = []
     visited = []
     max_frontier_size = 0
@@ -35,8 +42,13 @@ def uniform_cost_search(start, goal):
             
             if new: #check that this state is not already in lists
                 new.parent = current_node
-                new.g = current_node.g + 1 # update g(n)
-                new.cost = new.g # update total cost
+
+                if(heuistic == "misplaced tile"):
+                    new.g = current_node.g + 1 # update g(n)
+                    new.h = Misplaced_Tile_Heuristic(current_node, goal) # update h(n)
+                    new.cost = new.g + new.h # update new total cost
+                else:
+                    pass #add code for euclidean
                 
                 in_lists = any(node.state == new.state for node in frontier) #check if already in frontier or visited
                 if not in_lists:
