@@ -7,9 +7,6 @@ def Misplaced_Tile_Heuristic(currentPuzzle, goalPuzzle):
         if currentPuzzle.state[i] != goalPuzzle.state[i] and currentPuzzle.state[i] != 'b':
             sum = sum + 1
     return sum
-        # for j in range(0, len(currentPuzzle[i])):
-        #     if currentPuzzle[i][j] != goalPuzzle[i][j]:
-        #         return 1
 
 def Astar(start, goal, heuistic):
     frontier = []
@@ -26,19 +23,15 @@ def Astar(start, goal, heuistic):
         
         if(len(frontier) > max_frontier_size):
             max_frontier_size = len(frontier)
-            
+
         frontier.sort(key = lambda x: x.cost, reverse=True) #order frontier by cost
         current_node = frontier.pop()
-        
-        #if (iter % 1000 == 0):
-        #print("Frontier size={}, Visited nodes={}".format(len(frontier), len(visited)), end='\r')
         
         if current_node.state == goal.state:
             print()
             print(f"To solve this problem the search algorithm expanded a total of {len(visited)} nodes.")
             print(f"The maximum number of nodes in the queue at any one time: {max_frontier_size}.")
-            #print("Total nodes expanded={}".format(len(visited)))
-            #print("Final size of frontier={}".format(len(frontier)))
+
             return current_node
             
         visited.append(current_node)

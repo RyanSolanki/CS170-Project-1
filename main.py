@@ -67,6 +67,7 @@ def main():
         print()
         
         print(f"The depth of the goal node was {solution_len}.")
+        print()
     else:
         print("No solution found")
     

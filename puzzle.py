@@ -1,12 +1,3 @@
-#puzzle.py
-#
-#puzzle state = array denoting order of tiles with b being the blank space
-#ex: 
-# ['1', '2', '3', '4', 'b' , '5', '6', '7', '8'] =
-# 123
-# 4b5
-# 678
-
 class Puzzle:
     def __init__(self, state, **kwargs):
         self.state = state #state array
@@ -93,14 +84,3 @@ class Puzzle:
                 print()
             print(tile,end='')
         print("\tExpanding this node...")   
-
-'''
-#test code
-p = Puzzle(['1', '2', '3', '4', '6', '5', 'b', '7', '8'])
-p.print_puzzle()
-for i in range(0, 4):
-    print('=====')
-    q = p.move_blank_space(i)
-    if q:
-        q.print_puzzle()
-'''
