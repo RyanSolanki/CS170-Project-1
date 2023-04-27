@@ -65,16 +65,34 @@ class Puzzle:
     '''
     prints the puzzle to console
     '''
-    def print_puzzle(self):
-        print('=====')
-
-        print(f"The best state to expand with g(n) = {self.cost}")
+    def print_start_state(self):
+        print(f"Expanding state")
 
         for i,tile in enumerate(self.state):
             if i != 0 and (i % self.puzzle_size) == 0:
                 print()
             print(tile,end='')
-        print()   
+        print()  
+
+    def print_astar(self):
+
+        print(f"The best state to expand with g(n) = {self.g}, h(n) = {self.h} is...")
+
+        for i,tile in enumerate(self.state):
+            if i != 0 and (i % self.puzzle_size) == 0:
+                print()
+            print(tile,end='')
+        print("\tExpanding this node...")  
+
+    def print_ucs(self):
+
+        print(f"The best state to expand with g(n) = {self.g} is...")
+
+        for i,tile in enumerate(self.state):
+            if i != 0 and (i % self.puzzle_size) == 0:
+                print()
+            print(tile,end='')
+        print("\tExpanding this node...")   
 
 '''
 #test code

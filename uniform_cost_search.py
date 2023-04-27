@@ -4,25 +4,31 @@ from puzzle import Puzzle
 def uniform_cost_search(start, goal):
     frontier = []
     visited = []
+    max_frontier_size = 0
     
     current_node = start
     frontier.append(current_node) #push start node to frontier
-    
+
     iter = 0
     while True:
         if not frontier:
             return None #problem is impossible to solve
         
+        if(len(frontier) > max_frontier_size):
+            max_frontier_size = len(frontier)
+
         frontier.sort(key = lambda x: x.cost, reverse=True) #order frontier by cost
         current_node = frontier.pop()
         
         #if (iter % 1000 == 0):
-        print("Frontier size={}, Visited nodes={}".format(len(frontier), len(visited)), end='\r')
+        #print("Frontier size={}, Visited nodes={}".format(len(frontier), len(visited)), end='\r')
         
         if current_node.state == goal.state:
             print()
-            print("Total nodes expanded={}".format(len(visited)))
-            print("Final size of frontier={}".format(len(frontier)))
+            print(f"To solve this problem the search algorithm expanded a total of {len(visited)} nodes.")
+            print(f"The maximum number of nodes in the queue at any one time: {max_frontier_size}.")
+            #print("Total nodes expanded={}".format(len(visited)))
+            #print("Final size of frontier={}".format(len(frontier)))
             return current_node
             
         visited.append(current_node)
@@ -33,7 +39,8 @@ def uniform_cost_search(start, goal):
             
             if new: #check that this state is not already in lists
                 new.parent = current_node
-                new.cost = current_node.cost + 1 #add one to cost
+                new.g = current_node.g + 1 # update g(n)
+                new.cost = new.g # update total cost
                 
                 in_lists = any(node.state == new.state for node in frontier) #check if already in frontier or visited
                 if not in_lists:
