@@ -7,32 +7,31 @@ def Misplaced_Tile_Heuristic(currentPuzzle, goalPuzzle):
         if currentPuzzle.state[i] != goalPuzzle.state[i] and currentPuzzle.state[i] != 'b':
             sum = sum + 1
     return sum
-        # for j in range(0, len(currentPuzzle[i])):
-        #     if currentPuzzle[i][j] != goalPuzzle[i][j]:
-        #         return 1
 
 def Astar(start, goal, heuistic):
     frontier = []
     visited = []
+    max_frontier_size = 0
     
     current_node = start
     frontier.append(current_node) #push start node to frontier
-    
+
     iter = 0
     while True:
         if not frontier:
             return None #problem is impossible to solve
         
+        if(len(frontier) > max_frontier_size):
+            max_frontier_size = len(frontier)
+
         frontier.sort(key = lambda x: x.cost, reverse=True) #order frontier by cost
         current_node = frontier.pop()
         
-        #if (iter % 1000 == 0):
-        print("Frontier size={}, Visited nodes={}".format(len(frontier), len(visited)), end='\r')
-        
         if current_node.state == goal.state:
             print()
-            print("Total nodes expanded={}".format(len(visited)))
-            print("Final size of frontier={}".format(len(frontier)))
+            print(f"To solve this problem the search algorithm expanded a total of {len(visited)} nodes.")
+            print(f"The maximum number of nodes in the queue at any one time: {max_frontier_size}.")
+
             return current_node
             
         visited.append(current_node)
@@ -45,7 +44,9 @@ def Astar(start, goal, heuistic):
                 new.parent = current_node
 
                 if(heuistic == "misplaced tile"):
-                    new.cost = current_node.cost + 1 + Misplaced_Tile_Heuristic(current_node, goal) #add one to cost
+                    new.g = current_node.g + 1 # update g(n)
+                    new.h = Misplaced_Tile_Heuristic(current_node, goal) # update h(n)
+                    new.cost = new.g + new.h # update new total cost
                 else:
                     pass #add code for euclidean
                 
@@ -61,32 +62,3 @@ def Astar(start, goal, heuistic):
                             frontier[i] = new
                 
         iter += 1
-
-def main():
-
-    print("Welcome to 862326974 8 puzzle solver.")
-    puzzleSize = int(input("Enter the puzzle size (3 for 8-puzzle, 4 for 15-puzzle, etc.)\n"))
-    puzzleType = input("Type “1” to use a default puzzle, or “2” to enter your own puzzle.\n")
-    
-    p = Puzzle([0]*(pow(puzzleSize,2)), puzzleSize)
-    #p.print_puzzle()
-    
-    if puzzleType == "1":
-        p.update_state(['1', '2', '3', '4', 'b', '5', '6', '7', '8'])
-        p.print_puzzle()
-    elif puzzleType == "2":
-        print("Enter your puzzle, use a zero to represent the blank")
-        sNums = []
-        for i in range(puzzleSize):
-            currentRow = input("Enter the values for row " + str(i + 1) + " separated by spaces\n")
-            currentNumString = currentRow.split(" ")
-            for string in currentNumString:
-                sNums.append(string)
-        p.update_state(sNums)
-    
-    p.print_puzzle()
-    
-    Astar()
-
-if __name__ == "__main__":
-    main()
