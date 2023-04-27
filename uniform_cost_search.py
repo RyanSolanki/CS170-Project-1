@@ -4,13 +4,21 @@ from puzzle import Puzzle
 def uniform_cost_search():
     print("TODO: implement me!")
 
-def Misplaced_Tile_Heuristic():
-    print("TODO: implement me!")
+def Misplaced_Tile_Heuristic(currentPuzzle, goalPuzzle):
+    sum = 0
+    for i in range(0, len(currentPuzzle)):
+        if currentPuzzle[i] != goalPuzzle[i] and currentPuzzle[i] != 'b':
+            sum = sum + 1
+    return sum
+        # for j in range(0, len(currentPuzzle[i])):
+        #     if currentPuzzle[i][j] != goalPuzzle[i][j]:
+        #         return 1
 
 def Astar():
     print("TODO: implement me!")
 
 def main():
+
     print("Welcome to 862326974 8 puzzle solver.")
     puzzleSize = int(input("Enter the puzzle size (3 for 8-puzzle, 4 for 15-puzzle, etc.)\n"))
     puzzleType = input("Type “1” to use a default puzzle, or “2” to enter your own puzzle.\n")
