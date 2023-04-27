@@ -64,6 +64,7 @@ class Puzzle:
     prints the puzzle to console
     '''
     def print_puzzle(self):
+        print('=====')
         for i,tile in enumerate(self.state):
             if i != 0 and (i % self.puzzle_size) == 0:
                 print()
