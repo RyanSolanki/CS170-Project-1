@@ -13,7 +13,7 @@ def Euclidean_Distance_Heuristic(currentPuzzle, goalPuzzle):
 
     for i in range(len(current_2d)):
         for j in range(len(current_2d[i])):
-            goalIndex = goalPuzzle.index(currentPuzzle[i])
+            goalIndex = goalPuzzle.index(current_2d[i][j])
             goalX, goalY = ((goalIndex/len(current_2d[i])+1, goalIndex%len(current_2d[i]+1)))
             distance = math.sqrt(math.pow(goalX-i, 2)+math.pow(goalY-j, 2))
             total_distance += distance
