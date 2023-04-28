@@ -43,7 +43,7 @@ def main():
     elif (algo == 2):
         solution = Astar(start, goal, "misplaced tile")
     elif (algo == 3):
-        pass #replace with call to A* here
+        solution = Astar(start, goal, "euclidean distance " )
         
     if solution:
         

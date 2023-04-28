@@ -3,19 +3,36 @@ import math
 
     
 def Euclidean_Distance_Heuristic(currentPuzzle, goalPuzzle):
+    print(currentPuzzle.state)
+    print(goalPuzzle.state)
     total_distance = 0
-    current_2d = [[]]
-    goal_2d = [[]]
-    row_length, column_length = int(math.sqrt(len(currentPuzzle)))
+    
+    row_length = currentPuzzle.puzzle_size
+    print(row_length)
+    column_length = currentPuzzle.puzzle_size
+    print(column_length)
+
+    current_2d = [[]for x in range(column_length)]
+    goal_2d = [[]for x in range(column_length)]
+
     for i in range(column_length):
         for j in range(row_length):
-            current_2d[i][j] = currentPuzzle[i+len(currentPuzzle)*j]
-            goal_2d[i][j] = goalPuzzle[i+len(goalPuzzle)*j]
+            tempVal = currentPuzzle.state[i*column_length+j]
+            current_2d[i].append(tempVal)
+            #print(currentPuzzle.state[i*column_length+j], " CURR")
+            #print(current_2d[i][j], "CURRENT")
+            tempVal2 = goalPuzzle.state[i*column_length+j]
+            #print(goalPuzzle.state[i*column_length+j], " GOAL")
+            goal_2d[i].append(tempVal2)
+    #print(current_2d)
+    #print(goal_2d)
+            #print(goal_2d[i][j], "GOAL")
 
     for i in range(len(current_2d)):
         for j in range(len(current_2d[i])):
-            goalIndex = goalPuzzle.index(current_2d[i][j])
-            goalX, goalY = ((goalIndex/len(current_2d[i])+1, goalIndex%len(current_2d[i]+1)))
+            goalIndex = goalPuzzle.state.index(current_2d[i][j])
+            goalX = goalIndex/len(current_2d[i])+1
+            goalY = goalIndex % len(current_2d[i])+1
             distance = math.sqrt(math.pow(goalX-i, 2)+math.pow(goalY-j, 2))
             total_distance += distance
     return distance
