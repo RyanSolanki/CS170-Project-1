@@ -1,6 +1,7 @@
 from puzzle import Puzzle
 from uniform_cost_search import *
 from misplaced_tile import *
+from euclidean_distance import *
 
 def main():
     count = 1

@@ -1,12 +1,23 @@
-#uniform cost search
 from puzzle import Puzzle
+import math
 
-def Misplaced_Tile_Heuristic(currentPuzzle, goalPuzzle):
-    sum = 0
-    for i in range(0, len(currentPuzzle.state)):
-        if currentPuzzle.state[i] != goalPuzzle.state[i] and currentPuzzle.state[i] != 'b':
-            sum = sum + 1
-    return sum
+    
+def Euclidean_Distance_Heuristic(currentPuzzle, goalPuzzle):
+    total_distance = 0
+    current_2d = [[]]
+    goal_2d = [[]]
+    for i in range(math.sqrt(len(currentPuzzle))):
+        for j in range(math.sqrt(len(currentPuzzle))):
+            current_2d[i][j] = currentPuzzle[i+len(currentPuzzle)*j]
+            goal_2d[i][j] = goalPuzzle[i+len(goalPuzzle)*j]
+
+    for i in range(len(current_2d)):
+        for j in range(len(current_2d[i])):
+            goalIndex = goalPuzzle.index(currentPuzzle[i])
+            goalX, goalY = ((goalIndex/len(current_2d[i])+1, goalIndex%len(current_2d[i]+1)))
+            distance = math.sqrt(math.pow(goalX-i, 2)+math.pow(goalY-j, 2))
+            total_distance += distance
+    return distance
 
 def Astar(start, goal, heuristic):
     frontier = []
@@ -48,7 +59,9 @@ def Astar(start, goal, heuristic):
                     new.h = Misplaced_Tile_Heuristic(current_node, goal) # update h(n)
                     new.cost = new.g + new.h # update new total cost
                 else:
-                    pass #add code for euclidean
+                    new.g = current_node.g + 1 # update g(n)
+                    new.h = Euclidean_Distance_Heuristic(current_node, goal) # update h(n)
+                    new.cost = new.g + new.h # update new total cost
                 
                 in_lists = any(node.state == new.state for node in frontier) #check if already in frontier or visited
                 if not in_lists:
