@@ -6,8 +6,9 @@ def Euclidean_Distance_Heuristic(currentPuzzle, goalPuzzle):
     total_distance = 0
     current_2d = [[]]
     goal_2d = [[]]
-    for i in range(math.sqrt(len(currentPuzzle))):
-        for j in range(math.sqrt(len(currentPuzzle))):
+    row_length, column_length = int(math.sqrt(len(currentPuzzle)))
+    for i in range(column_length):
+        for j in range(row_length):
             current_2d[i][j] = currentPuzzle[i+len(currentPuzzle)*j]
             goal_2d[i][j] = goalPuzzle[i+len(goalPuzzle)*j]
 
