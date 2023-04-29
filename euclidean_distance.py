@@ -3,14 +3,14 @@ import math
 
     
 def Euclidean_Distance_Heuristic(currentPuzzle, goalPuzzle):
-    print(currentPuzzle.state)
-    print(goalPuzzle.state)
+    #print(currentPuzzle.state)
+    #print(goalPuzzle.state)
     total_distance = 0
     
     row_length = currentPuzzle.puzzle_size
-    print(row_length)
+    #print(row_length)
     column_length = currentPuzzle.puzzle_size
-    print(column_length)
+    #print(column_length)
 
     current_2d = [[]for x in range(column_length)]
     goal_2d = [[]for x in range(column_length)]
@@ -30,12 +30,13 @@ def Euclidean_Distance_Heuristic(currentPuzzle, goalPuzzle):
 
     for i in range(len(current_2d)):
         for j in range(len(current_2d[i])):
-            goalIndex = goalPuzzle.state.index(current_2d[i][j])
-            goalX = goalIndex/len(current_2d[i])+1
-            goalY = goalIndex % len(current_2d[i])+1
-            distance = math.sqrt(math.pow(goalX-i, 2)+math.pow(goalY-j, 2))
-            total_distance += distance
-    return distance
+            if(current_2d[i][j] != 'b'):
+                goalIndex = goalPuzzle.state.index(current_2d[i][j])
+                goalX = goalIndex/len(current_2d[i])+1
+                goalY = goalIndex % len(current_2d[i])+1
+                distance = math.sqrt(math.pow(goalX-i, 2)+math.pow(goalY-j, 2))
+                total_distance += distance
+    return total_distance
 
 def Astar(start, goal, heuristic):
     frontier = []
