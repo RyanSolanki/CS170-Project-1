@@ -1,6 +1,7 @@
 from puzzle import Puzzle
 from uniform_cost_search import *
 from misplaced_tile import *
+from euclidean_distance import *
 
 def main():
     count = 1
@@ -42,7 +43,7 @@ def main():
     elif (algo == 2):
         solution = Astar(start, goal, "misplaced tile")
     elif (algo == 3):
-        pass #replace with call to A* here
+        solution = Astar(start, goal, "euclidean distance " )
         
     if solution:
         
