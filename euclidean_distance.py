@@ -1,12 +1,42 @@
-#uniform cost search
 from puzzle import Puzzle
+import math
 
-def Misplaced_Tile_Heuristic(currentPuzzle, goalPuzzle):
-    sum = 0
-    for i in range(0, len(currentPuzzle.state)):
-        if currentPuzzle.state[i] != goalPuzzle.state[i] and currentPuzzle.state[i] != 'b':
-            sum = sum + 1
-    return sum
+    
+def Euclidean_Distance_Heuristic(currentPuzzle, goalPuzzle):
+    #print(currentPuzzle.state)
+    #print(goalPuzzle.state)
+    total_distance = 0
+    
+    row_length = currentPuzzle.puzzle_size
+    #print(row_length)
+    column_length = currentPuzzle.puzzle_size
+    #print(column_length)
+
+    current_2d = [[]for x in range(column_length)]
+    goal_2d = [[]for x in range(column_length)]
+
+    for i in range(column_length):
+        for j in range(row_length):
+            tempVal = currentPuzzle.state[i*column_length+j]
+            current_2d[i].append(tempVal)
+            #print(currentPuzzle.state[i*column_length+j], " CURR")
+            #print(current_2d[i][j], "CURRENT")
+            tempVal2 = goalPuzzle.state[i*column_length+j]
+            #print(goalPuzzle.state[i*column_length+j], " GOAL")
+            goal_2d[i].append(tempVal2)
+    #print(current_2d)
+    #print(goal_2d)
+            #print(goal_2d[i][j], "GOAL")
+
+    for i in range(len(current_2d)):
+        for j in range(len(current_2d[i])):
+            if(current_2d[i][j] != 'b'):
+                goalIndex = goalPuzzle.state.index(current_2d[i][j])
+                goalX = goalIndex/len(current_2d[i])+1
+                goalY = goalIndex % len(current_2d[i])+1
+                distance = math.sqrt(math.pow(goalX-i, 2)+math.pow(goalY-j, 2))
+                total_distance += distance
+    return total_distance
 
 def Astar(start, goal, heuristic):
     frontier = []
@@ -48,7 +78,9 @@ def Astar(start, goal, heuristic):
                     new.h = Misplaced_Tile_Heuristic(current_node, goal) # update h(n)
                     new.cost = new.g + new.h # update new total cost
                 else:
-                    pass #add code for euclidean
+                    new.g = current_node.g + 1 # update g(n)
+                    new.h = Euclidean_Distance_Heuristic(current_node, goal) # update h(n)
+                    new.cost = new.g + new.h # update new total cost
                 
                 in_lists = any(node.state == new.state for node in frontier) #check if already in frontier or visited
                 if not in_lists:
