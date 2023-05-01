@@ -1,5 +1,10 @@
 from puzzle import Puzzle
+from uniform_cost_search import *
+from misplaced_tile import *
 import math
+
+def singleIndexTo2D(index, row_length, column_length):
+    return (index // column_length, index % row_length)
 
     
 def Euclidean_Distance_Heuristic(currentPuzzle, goalPuzzle):
@@ -24,19 +29,34 @@ def Euclidean_Distance_Heuristic(currentPuzzle, goalPuzzle):
             tempVal2 = goalPuzzle.state[i*column_length+j]
             #print(goalPuzzle.state[i*column_length+j], " GOAL")
             goal_2d[i].append(tempVal2)
-    #print(current_2d)
-    #print(goal_2d)
-            #print(goal_2d[i][j], "GOAL")
+    # for arr in current_2d:
+    #     print(arr)
+    #     print()
+    # print()
+    # for arr in goal_2d:
+    #     print(arr)
+    #     print()
 
     for i in range(len(current_2d)):
         for j in range(len(current_2d[i])):
             if(current_2d[i][j] != 'b'):
+                # print(f"CURRENT value at {i},{j} is {current_2d[i][j]}")
                 goalIndex = goalPuzzle.state.index(current_2d[i][j])
-                goalX = goalIndex/len(current_2d[i])+1
-                goalY = goalIndex % len(current_2d[i])+1
-                distance = math.sqrt(math.pow(goalX-i, 2)+math.pow(goalY-j, 2))
+                indicies = singleIndexTo2D(goalIndex, row_length, column_length)
+                goalI = indicies[0]#goalIndex/len(current_2d[i])+1
+                goalJ = indicies[1]#goalIndex % len(current_2d[i])+1
+                # print(f"GOAL value at {goalI},{goalJ} is {goal_2d[goalI][goalJ]}")
+                distance = math.sqrt(math.pow(goalI-i, 2)+math.pow(goalJ-j, 2))
+                # print(f"Distance: {distance}")
                 total_distance += distance
+                # print(f"Total Distance: {total_distance}")
+                # print()
     return total_distance
+
+# samplePuzzle = [[1,2,3],[4,5,6],[7,8,'b']]
+# index2d = singleIndexTo2D([1,2,3,4,5,6,7,8,'b'].index(6), 3, 3)
+# print(f"2d Index: {index2d}, resulting part of the puzzle: {samplePuzzle[index2d[0]][index2d[1]]}")
+# print(Euclidean_Distance_Heuristic(Puzzle(['b',8,7,6,5,4,3,2,1]), Puzzle([1,2,3,4,5,6,7,8,'b'])))
 
 def Astar(start, goal, heuristic):
     frontier = []
