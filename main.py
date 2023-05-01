@@ -16,10 +16,13 @@ def main():
     if int(input()) == 2:
         for i in range(0,3):
             temp = input("Row {}: ".format(i))
-            arrtemp = temp.split(" ")
-            
-            for char in arrtemp:
-                p_list.append(char)
+            if(temp.find(' ') == -1): # Meaning there is no space
+                for char in temp:
+                    p_list.append(char)
+            else:
+                arrtemp = temp.split(" ")
+                for char in arrtemp:
+                    p_list.append(char)
     else:
         p_list = ['b', '1', '2',
                   '4', '5', '3',
