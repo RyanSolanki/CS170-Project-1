@@ -19,6 +19,10 @@ def Astar(start, goal, heuristic):
     iter = 0
     while True:
         if not frontier:
+            print()
+            print(f"To solve this problem the search algorithm expanded a total of {len(visited)} nodes.")
+            print(f"The maximum number of nodes in the queue at any one time: {max_frontier_size}.")
+            print()
             return None #problem is impossible to solve
         
         if(len(frontier) > max_frontier_size):
